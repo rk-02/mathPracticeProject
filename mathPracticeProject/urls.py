@@ -10,6 +10,8 @@ urlpatterns = [
     path('auth/', views.auth, name='auth'),
     path('index/', include("app.urls")),
     path('', views.auth),
+    path('practice_detail/', views.practice_detail, name='practice_detail'),
+    path('exam_detail/', views.exam_detail, name='exam_detail'),
 ]
 
 if settings.DEBUG:
