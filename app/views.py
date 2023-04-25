@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.views.generic.base import View
 from .models import Subject
 from .models import User as us
-from .models import Practice, PracticalTask, AnsPract, Exam, ExamTask
+from .models import Practice, PracticalTask, Exam, ExamTask
 
 def practice_detail(request):
     if request.method == 'POST':
@@ -15,17 +15,15 @@ def practice_detail(request):
         practice = Practice.objects.get(idSubj=subj_id)
         practical_tasks = PracticalTask.objects.filter(idPractice=practice.id)
         data = []
+        num = 0
         for task in practical_tasks:
-            ans_pract = AnsPract.objects.get(idTask=task.id)
             task_data = {
                 'task_id': task.id,
+                'num': num,
                 'task_text': task.TaskText,
-                'ans1': ans_pract.ans1,
-                'ans2': ans_pract.ans2,
-                'ans3': ans_pract.ans3,
-                'ans4': ans_pract.ans4,
-                'right_ans': ans_pract.rightAns,
-            }
+                'right_ans': task.rightAns,
+           }
+            num += 1
             data.append(task_data)
         return render(request, 'index.html', {"subj_list": subjects,
                                               "currentUser": current_user[0],
